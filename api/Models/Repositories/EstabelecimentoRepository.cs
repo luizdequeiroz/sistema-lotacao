@@ -1,89 +1,55 @@
-﻿using MySql.Data.MySqlClient;
-using System.Collections.Generic;
+﻿using api.Models.Repositories.Interfaces;
+using api.Models.Repositories.Scripts;
 using Dapper;
-using System;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace api.Models.Repositories
 {
-    public class EstabelecimentoRepository
+    public class EstabelecimentoRepository : IEstabelecimentoRepository
     {
-        private readonly string insert = @"
-                                insert into estabelecimento 
-                                    ( Nome
-                                    , Capacidade
-                                    , EnderecoCompleto
-                                    , Latitude
-                                    , Longitude
-                                    , DataCadastro)
-                                values
-                                    ( @Nome
-                                    , @Capacidade
-                                    , @EnderecoCompleto                                
-                                    , @Latitude  
-                                    , @Longitude 
-                                    , @DataCadastro);
+        private readonly MySqlConnection connection;
 
-                                select LAST_INSERT_ID()";
-
-        private readonly string remove = @"
-                                insert into estabelecimento 
-                                    ( Nome
-                                    , Capacidade
-                                    , EnderecoCompleto
-                                    , Latitude
-                                    , Longitude
-                                    , DataCadastro)
-                                values
-                                    ( @Nome
-                                    , @Capacidade
-                                    , @EnderecoCompleto                                
-                                    , @Latitude  
-                                    , @Longitude 
-                                    , @DataCadastro);
-
-                                select LAST_INSERT_ID()";
-
-        private readonly string connectionString;
-
-        public EstabelecimentoRepository(string connectionString)
+        public EstabelecimentoRepository(MySqlConnection connection)
         {
-            this.connectionString = connectionString;
+            this.connection = connection;
         }
 
         public IList<Estabelecimento> SelectAll()
         {
-            var connection = new MySqlConnection(connectionString);
-
-            connection.Open();
-            var result = connection.Query<Estabelecimento>("select * from estabelecimento");
-            connection.Close();
-
+            var result = connection.Query<Estabelecimento>(EstabelecimentoScripts.SELECT_ALL);
             return result.AsList();
         }
 
         public Estabelecimento Insert(Estabelecimento estabelecimento)
         {
-            var connection = new MySqlConnection(connectionString);
-
-            connection.Open();
-            var result = connection.Query<int>(insert, estabelecimento);
-            connection.Close();
+            var result = connection.Query<int>(EstabelecimentoScripts.INSERT, estabelecimento);
 
             estabelecimento.Id = result.SingleOrDefault();
             return estabelecimento;
         }
 
-        public Estabelecimento Remove(Estabelecimento estabelecimento)
+        public void Delete(int id)
         {
-            var connection = new MySqlConnection(connectionString);
+            connection.Query(EstabelecimentoScripts.DELETE, new { @Id = id });
+        }
 
-            connection.Open();
-            var result = connection.Query<int>(remove, estabelecimento);
-            connection.Close();
+        public void Update(Estabelecimento estabelecimento)
+        {
+            connection.Query(EstabelecimentoScripts.UPDATE, estabelecimento);
+        }
 
-            estabelecimento.Id = result.SingleOrDefault();
-            return estabelecimento;
+        public Estabelecimento SelectById(int id)
+        {
+            var result = connection.Query<Estabelecimento>(EstabelecimentoScripts.SELECT_BY_ID, new { @Id = id });
+            return result.SingleOrDefault();
+        }
+
+        public IList<Estabelecimento> SelectByName(string name)
+        {
+            var result = connection.Query<Estabelecimento>(EstabelecimentoScripts.SELECT_BY_NAME, new { @Nome = $"%{name}%" });
+            return result.AsList();
         }
     }
 }

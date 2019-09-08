@@ -1,5 +1,5 @@
 ﻿using api.Models;
-using api.Models.Repositories;
+using api.Models.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -9,26 +9,11 @@ namespace api.Controllers
     [ApiController]
     public class EstabelecimentoController : ControllerBase
     {
-        private readonly EstabelecimentoRepository estabelecimentoRepository;
+        private readonly IEstabelecimentoRepository estabelecimentoRepository;
 
-        public EstabelecimentoController()
+        public EstabelecimentoController(IEstabelecimentoRepository estabelecimentoRepository)
         {
-            this.estabelecimentoRepository = new EstabelecimentoRepository("server=localhost;database=lotacao;user=root;password=i2154");
-        }
-
-        [HttpGet]
-        public IActionResult ListAll()
-        {
-            try
-            {
-                var estabelecimentos = estabelecimentoRepository.SelectAll();
-
-                return Ok(estabelecimentos);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            this.estabelecimentoRepository = estabelecimentoRepository;
         }
 
         [HttpPost]
@@ -46,14 +31,91 @@ namespace api.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Remove(Estabelecimento estabelecimento)
+        [HttpGet("id={id}")]
+        public IActionResult ReadById(int id)
         {
             try
             {
-                Estabelecimento estabelecimentoCadastrado = estabelecimentoRepository.Remove(estabelecimento);
+                var estabelecimento = estabelecimentoRepository.SelectById(id);
 
-                return Ok(estabelecimentoCadastrado);
+                if (estabelecimento != null)
+                {
+                    return Ok(estabelecimento);
+                }
+                else
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("{name}")]
+        public IActionResult ReadByName(string name)
+        {
+            try
+            {
+                var estabelecimentos = estabelecimentoRepository.SelectByName(name);
+
+                if(estabelecimentos.Count > 0)
+                {
+                    return Ok(estabelecimentos);
+                }
+                else
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ReadAll()
+        {
+            try
+            {
+                var estabelecimentos = estabelecimentoRepository.SelectAll();
+
+                return Ok(estabelecimentos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Estabelecimento estabelecimento)
+        {
+            try
+            {
+                estabelecimento.Id = id;
+                estabelecimento.DataAtualizacao = DateTime.Now;
+
+                estabelecimentoRepository.Update(estabelecimento);
+
+                return Ok(estabelecimento);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                estabelecimentoRepository.Delete(id);
+
+                return Ok("Estabelecimento deletado com sucesso.");
             }
             catch (Exception ex)
             {

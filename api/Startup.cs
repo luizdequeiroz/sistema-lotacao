@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using api.Models.Repositories;
+using api.Models.Repositories.Interfaces;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace api
@@ -28,6 +31,9 @@ namespace api
                     Version = "v1"
                 });
             });
+
+            services.AddSingleton(factory => new MySqlConnection(Configuration.GetConnectionString("MySqlConnectionString")));
+            services.AddSingleton<IEstabelecimentoRepository, EstabelecimentoRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
