@@ -26,6 +26,24 @@ namespace api.Models.Repositories
 
                                 select LAST_INSERT_ID()";
 
+        private readonly string remove = @"
+                                insert into estabelecimento 
+                                    ( Nome
+                                    , Capacidade
+                                    , EnderecoCompleto
+                                    , Latitude
+                                    , Longitude
+                                    , DataCadastro)
+                                values
+                                    ( @Nome
+                                    , @Capacidade
+                                    , @EnderecoCompleto                                
+                                    , @Latitude  
+                                    , @Longitude 
+                                    , @DataCadastro);
+
+                                select LAST_INSERT_ID()";
+
         private readonly string connectionString;
 
         public EstabelecimentoRepository(string connectionString)
@@ -50,6 +68,18 @@ namespace api.Models.Repositories
 
             connection.Open();
             var result = connection.Query<int>(insert, estabelecimento);
+            connection.Close();
+
+            estabelecimento.Id = result.SingleOrDefault();
+            return estabelecimento;
+        }
+
+        public Estabelecimento Remove(Estabelecimento estabelecimento)
+        {
+            var connection = new MySqlConnection(connectionString);
+
+            connection.Open();
+            var result = connection.Query<int>(remove, estabelecimento);
             connection.Close();
 
             estabelecimento.Id = result.SingleOrDefault();

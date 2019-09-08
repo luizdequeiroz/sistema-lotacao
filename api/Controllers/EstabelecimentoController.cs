@@ -13,7 +13,7 @@ namespace api.Controllers
 
         public EstabelecimentoController()
         {
-            this.estabelecimentoRepository = new EstabelecimentoRepository("server=localhost;database=lotacao;user=root;password=protego");
+            this.estabelecimentoRepository = new EstabelecimentoRepository("server=localhost;database=lotacao;user=root;password=i2154");
         }
 
         [HttpGet]
@@ -37,6 +37,21 @@ namespace api.Controllers
             try
             {
                 Estabelecimento estabelecimentoCadastrado = estabelecimentoRepository.Insert(estabelecimento);
+
+                return Ok(estabelecimentoCadastrado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Remove(Estabelecimento estabelecimento)
+        {
+            try
+            {
+                Estabelecimento estabelecimentoCadastrado = estabelecimentoRepository.Remove(estabelecimento);
 
                 return Ok(estabelecimentoCadastrado);
             }
