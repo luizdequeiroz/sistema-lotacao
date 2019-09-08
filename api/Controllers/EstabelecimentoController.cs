@@ -1,4 +1,5 @@
 ﻿using api.Models;
+using api.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -8,32 +9,36 @@ namespace api.Controllers
     [ApiController]
     public class EstabelecimentoController : ControllerBase
     {
-        [HttpGet("{quantidade}/{latitude}/{longitude}")]
-        public IActionResult List(int quantidade, string latitude, string longitude)
+        private readonly EstabelecimentoRepository estabelecimentoRepository;
+
+        public EstabelecimentoController()
+        {
+            this.estabelecimentoRepository = new EstabelecimentoRepository("server=localhost;database=lotacao;user=root;password=protego");
+        }
+
+        [HttpGet]
+        public IActionResult ListAll()
         {
             try
             {
-                var estabelecimentos = EstabelecimentoMocks.Dados;
+                var estabelecimentos = estabelecimentoRepository.SelectAll();
 
-                dynamic selecinado = null;
-                foreach (var estabelecimento in estabelecimentos)
-                {
-                    if (estabelecimento.Quantidade == quantidade
-                        && estabelecimento.Latitude == latitude
-                        && estabelecimento.Longitude == longitude)
-                    {
-                        selecinado = estabelecimento;
-                    }
-                }
+                return Ok(estabelecimentos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
 
-                if (selecinado != null)
-                {
-                    return Ok(selecinado);
-                }
-                else
-                {
-                    return BadRequest("Nenhum estabelecimento encontrado!");
-                }
+        [HttpPost]
+        public IActionResult Create(Estabelecimento estabelecimento)
+        {
+            try
+            {
+                Estabelecimento estabelecimentoCadastrado = estabelecimentoRepository.Insert(estabelecimento);
+
+                return Ok(estabelecimentoCadastrado);
             }
             catch (Exception ex)
             {
