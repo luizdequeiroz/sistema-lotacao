@@ -31,11 +31,6 @@ namespace api.Controllers
             }
         }
 
-        private IActionResult Ok(Usuario usuarioCadastrado)
-        {
-            throw new NotImplementedException();
-        }
-
         [HttpGet("id={id}")]
         public IActionResult ReadById(int id)
         {
