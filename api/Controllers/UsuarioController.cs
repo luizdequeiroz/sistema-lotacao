@@ -2,13 +2,10 @@
 using api.Models.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace api.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -18,13 +15,13 @@ namespace api.Controllers
         {
             this.usuarioRepository = usuarioRepository;
         }
-        //Criar 
+
         [HttpPost]
         public IActionResult Create(Usuario usuario)
         {
             try
             {
-                Usuario usuarioCadastrado = usuarioRepository.Insert(usuario);
+                var usuarioCadastrado = usuarioRepository.Insert(usuario);
 
                 return Ok(usuarioCadastrado);
             }
@@ -38,7 +35,7 @@ namespace api.Controllers
         {
             throw new NotImplementedException();
         }
-        //Ler por Id
+
         [HttpGet("id={id}")]
         public IActionResult ReadById(int id)
         {
@@ -60,7 +57,7 @@ namespace api.Controllers
                 return BadRequest(ex);
             }
         }
-        //Ler por nome
+
         [HttpGet("{name}")]
         public IActionResult ReadByName(string name)
         {
@@ -82,7 +79,7 @@ namespace api.Controllers
                 return BadRequest(ex);
             }
         }
-        //Ler 
+
         [HttpGet]
         public IActionResult ReadAll()
         {
@@ -97,7 +94,7 @@ namespace api.Controllers
                 return BadRequest(ex);
             }
         }
-        //Update
+
         [HttpPut("{id}")]
         public IActionResult Update(int id, Usuario usuario)
         {
@@ -115,7 +112,7 @@ namespace api.Controllers
                 return BadRequest(ex);
             }
         }
-        //Delete
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -130,7 +127,5 @@ namespace api.Controllers
                 return BadRequest(ex);
             }
         }
-
-
     }
 }

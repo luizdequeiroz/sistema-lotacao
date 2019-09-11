@@ -34,6 +34,7 @@ namespace api
 
             services.AddSingleton(factory => new MySqlConnection(Configuration.GetConnectionString("MySqlConnectionString")));
             services.AddSingleton<IEstabelecimentoRepository, EstabelecimentoRepository>();
+            services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

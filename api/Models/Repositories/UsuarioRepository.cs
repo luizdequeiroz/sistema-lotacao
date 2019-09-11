@@ -2,10 +2,8 @@
 using api.Models.Repositories.Scripts;
 using Dapper;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace api.Models.Repositories
 {
@@ -17,6 +15,7 @@ namespace api.Models.Repositories
         {
             this.connection = connection;
         }
+
         public IList<Usuario> SelectAll()
         {
             var result = connection.Query<Usuario>(UsuarioScripts.SELECT_ALL);
@@ -46,7 +45,8 @@ namespace api.Models.Repositories
             var result = connection.Query<Usuario>(UsuarioScripts.SELECT_BY_ID, new { @Id = id });
             return result.SingleOrDefault();
         }
-        public IList<Usuario> SelectByName(String name)
+
+        public IList<Usuario> SelectByName(string name)
         {
             var result = connection.Query<Usuario>(UsuarioScripts.SELECT_BY_NAME, new { @Nome = $"%{name}%" });
             return result.AsList();

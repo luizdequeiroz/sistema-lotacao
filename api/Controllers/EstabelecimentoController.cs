@@ -21,7 +21,7 @@ namespace api.Controllers
         {
             try
             {
-                Estabelecimento estabelecimentoCadastrado = estabelecimentoRepository.Insert(estabelecimento);
+                var estabelecimentoCadastrado = estabelecimentoRepository.Insert(estabelecimento);
 
                 return Ok(estabelecimentoCadastrado);
             }

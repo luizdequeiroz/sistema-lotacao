@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace api.Models.Repositories.Interfaces
 {
@@ -12,7 +9,6 @@ namespace api.Models.Repositories.Interfaces
         void Delete(int Id);
         void Update(Usuario usuario);
         Usuario SelectById(int id);
-        IList<Usuario> SelectByName(String name);
-
+        IList<Usuario> SelectByName(string name);
     }
 }
