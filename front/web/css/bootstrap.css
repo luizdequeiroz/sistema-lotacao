@@ -5589,7 +5589,7 @@ button.close {
     bottom: 20px;
   }
 }
-.clearfix:before,
+.clearfix::after,
 .clearfix:after,
 .container:before,
 .container:after,
