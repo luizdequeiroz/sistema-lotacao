@@ -3,6 +3,7 @@ using api.Models.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
@@ -21,6 +22,22 @@ namespace api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            /// Configuração para que qualquer endereço consiga fazer requisições à API.
+            services.AddCors(
+                options => options.AddPolicy(
+                    "AllowAll", p =>
+                    {
+                        p.AllowAnyOrigin();
+                        p.AllowAnyMethod();
+                        p.AllowAnyHeader();
+                    }));
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAll"));
+            });
+            ///
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
@@ -57,6 +74,7 @@ namespace api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseCors("AllowAll");
         }
     }
 }

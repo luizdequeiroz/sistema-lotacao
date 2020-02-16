@@ -5,3 +5,5 @@
 /.vs/sistema-lotacao
 /api/bin/Debug/netcoreapp2.2
 /api/obj
+
+node_modules/
