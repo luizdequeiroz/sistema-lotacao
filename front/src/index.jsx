@@ -1,37 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import Header from './components/template';
+import { HashRouter as Routers, Switch, Route } from 'react-router-dom';
+import Registro from './components/registro';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/style.css';
 
 const api = "https://localhost:44327/api";
 
 function App() {
-    const [usuarios, setUsuarios] = useState([]);
 
-    function getUsers() {
-
-        fetch(`${api}/Usuario`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then(json => {
-                setUsuarios(json);
-            });
-    }
-
-    return <>
-        <button onClick={getUsers}>CADASTRO ESTABELECIMENTO</button>
-        <h3>CADASTRO ESTABELECIMENTO</h3>
-        <ul>
-            {usuarios.map(usuario => <li>{usuario.nome} - {usuario.email}</li>)}
-        </ul>
-    </>;
+    return (
+        <Routers>
+            <Header />
+            <Switch>
+                <Route exact path="/" component={() => <h1>Inicio</h1>} />
+                <Route path="/registro" component={Registro} />
+            </Switch>
+        </Routers>
+    );
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
