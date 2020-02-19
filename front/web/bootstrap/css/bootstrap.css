@@ -1815,10 +1815,10 @@ pre code {
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: #ffc107;
+  color: #e36e53;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #ffc107;
+  border: 1px solid #e36e53;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -1835,11 +1835,11 @@ pre code {
 }
 
 .form-control:focus {
-  color: #ffc107;
+  color: #e36e53;
   background-color: #fff;
-  border-color: #ffc107;
+  border-color: #e36e53;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(255, 204, 0,.3);
+  box-shadow: 0 0 0 0.2rem rgba(227, 110, 83,.2);
 }
 
 .form-control::-webkit-input-placeholder {
@@ -1863,7 +1863,7 @@ pre code {
 }
 
 .form-control::placeholder {
-  color: #ffc107;
+  color: #e36e53;
   opacity: 1;
 }
 
@@ -2220,6 +2220,7 @@ textarea.form-control {
   flex-flow: row wrap;
   -ms-flex-align: center;
   align-items: center;
+
 }
 
 .form-inline .form-check {

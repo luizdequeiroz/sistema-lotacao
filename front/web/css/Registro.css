@@ -1,0 +1,119 @@
+body{
+    background-color: lightgoldenrodyellow;
+}
+
+.img-responsive{
+    height: auto;
+    max-height: 300px;
+}
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #9add52;
+}
+
+li {
+    float: left;
+    color: white;
+}
+
+li a{
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover{
+    background-color: #7dc232;
+}
+
+#txtbusca{
+    border: 0px solid #222222;
+    background: white;
+    width: 260px;
+    height: 23px;
+    margin: 0 auto;
+    padding: 5px 0px 5px 5px;
+    float: right;
+    line-height: 36px;
+    
+    
+}
+
+#btnBusca {
+    background-color: #00cccc;
+    position: relative;
+    border: 0px solid #222;
+    color: #ffffff;
+    margin: 0 auto;
+    padding: 10px;
+    border: 0 none;
+    font-size:11px;
+    font-weight: bold;
+    text-transform: upp;
+}
+
+h3.info{
+    text-align: center;
+}
+
+.register{
+    padding: 3em 0 5em 0;
+}
+
+.register-top-grid, .register-bottom-grid h3 {
+    color:#000000;
+	font-size: 1.4em;
+	padding-bottom: 15px;
+	margin: 0;
+	font-weight: 600;
+}
+
+.register-top-grid div, .register-bottom-grid div {
+	width: 48%;
+	float: left;
+	margin: 10px 0;
+}
+.register-top-grid span, .register-bottom-grid span {
+	font-size: 1.1em;
+	padding-bottom: 0.2em;
+	display: block;
+	text-transform: uppercase;
+}
+
+.register-top-grid input[type="text"], .register-bottom-grid input[type="password"] {
+	outline-color:#FF5B36;
+	width: 96%;
+	font-size: 1em;
+	padding: 0.5em;
+}
+
+.register-format{
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.campo{
+    width: 60%;
+    margin-left: 20%;
+    padding: 45px 15px;
+    height: auto;
+    display: inline;
+}
+
+.campo input {
+    margin: 10px 1%;
+    padding: 8px 1%;
+    width: 90%;
+  }
+  
+  .campo select {
+    margin: 10px 1%;
+    padding: 8px 1%;
+    width: 94%;
+  }
+

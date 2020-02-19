@@ -26,8 +26,8 @@ function App() {
     }
 
     return <>
-        <button onClick={getUsers}>Buscar Usuários</button>
-        <h3>Usuários:</h3>
+        <button onClick={getUsers}>CADASTRO ESTABELECIMENTO</button>
+        <h3>CADASTRO ESTABELECIMENTO</h3>
         <ul>
             {usuarios.map(usuario => <li>{usuario.nome} - {usuario.email}</li>)}
         </ul>
