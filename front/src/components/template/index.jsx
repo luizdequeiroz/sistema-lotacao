@@ -2,7 +2,7 @@ import React from 'react';
 import Menu from './menu';
 import { Switch, Route } from 'react-router-dom';
 
-const fastFoodImg = require('../../assets/images/FastFood.jpg');
+//const fastFoodImg = require('../../assets/images/FastFood.jpg');
 const caseiraImg = require('../../assets/images/caseira.jpg');
 
 function Header() {
@@ -12,8 +12,7 @@ function Header() {
             <div className="carousel-inner">
                 <div className="carousel-item active">
                     <Switch>
-                        <Route exact path="/" component={() => <img height={332.088} className="d-block w-100" src={fastFoodImg} />} />
-                        <Route path="/registro" component={() => <img className="d-block w-100" src={caseiraImg} />} />
+                        <Route path="/" component={() => <img className="d-block w-100" src={caseiraImg} />} />
                     </Switch>                    
                 </div>
             </div>
